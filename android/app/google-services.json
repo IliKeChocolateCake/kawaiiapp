@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "340325512080",
+    "project_id": "kawaii-589d1",
+    "storage_bucket": "kawaii-589d1.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:340325512080:android:e853cd6aa9c3f22f04b915",
+        "android_client_info": {
+          "package_name": "com.example.kawaii_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCMfSVWjmbDJkaL4uVsPIxsM7IVElbMRS4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
