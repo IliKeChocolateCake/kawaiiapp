@@ -35,8 +35,8 @@ class _MainNavigationState extends State<MainNavigation> {
   @override
   Widget build(BuildContext context) {
     final List<Widget> _pages = [
-      const Center(child: Home()),
-      const Center(child: Read()),
+      const Center(child: AnimalHomePage()),
+      Center(child: Read()),
       const Center(child: Play()),
     ];
 
