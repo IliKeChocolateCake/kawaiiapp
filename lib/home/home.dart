@@ -2,183 +2,241 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:kawaii_app/home/shorts.dart';
 
-class AnimalHomePage extends StatelessWidget {
+
+class AnimalHomePage extends StatefulWidget {
   const AnimalHomePage({super.key});
 
+  @override
+  State<AnimalHomePage> createState() => _AnimalHomePageState();
+}
 
+class _AnimalHomePageState extends State<AnimalHomePage> {
+  int _current = 0;
+
+  final SearchController searchController = SearchController();
+
+  final List<Map<String, dynamic>> homePage = [
+    {
+      'cover': 'https://ik.imagekit.io/mnwxsrjlz/kawaii/kuma.png?updatedAt=1753254555741',
+      'url': ''
+    },
+    {
+      'cover': 'https://ik.imagekit.io/mnwxsrjlz/kawaii/weasel.png?updatedAt=1753254555710',
+      'url': ''
+    },
+    {
+      'cover': 'https://ik.imagekit.io/mnwxsrjlz/kawaii/bunny.png?updatedAt=1753254555727',
+      'url': ''
+    },
+    {
+      'cover': 'https://ik.imagekit.io/mnwxsrjlz/kawaii/mouse.png?updatedAt=1753255624937',
+      'url': ''
+    },
+  ];
 
   @override
   Widget build(BuildContext context) {
-
-    final SearchController searchController = SearchController();
-
-    final List<Map<String, dynamic>> homePage =[
-
-      {
-        'cover' : '',
-        'url' : ''
-      },
-
-      {
-        'cover' : '',
-        'url' : ''
-      },
-
-      {
-        'cover' : '',
-        'url' : ''
-      },
-
-      {
-        'cover' : '',
-        'url' : ''
-      },
-
-
-
-    ];
-
     return Scaffold(
       appBar: AppBar(
-        title: Text('Home',
-            style: GoogleFonts.dynaPuff(fontSize: 20, color: Colors.white)),
+        title: Text(
+          'Home',
+          style: GoogleFonts.dynaPuff(fontSize: 20, color: Colors.white),
+        ),
         backgroundColor: const Color(0xFFFFA6C9),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(12.0),
-        child: Column(
+      body: SafeArea(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(12.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SearchAnchor.bar(
+                searchController: searchController,
+                barHintText: 'Search here.',
+                suggestionsBuilder: (context, controller) {
+                  final query = controller.text.toLowerCase();
+                  final items = ['Bear', 'Penguin', 'Rabbit'];
+                  final filtered = items
+                      .where((item) => item.toLowerCase().contains(query))
+                      .toList();
 
-          mainAxisAlignment: MainAxisAlignment.start,
-
-          children:  [
-
-        SearchAnchor.bar(
-        searchController: searchController,
-
-          barHintText: 'Search here.',
-          suggestionsBuilder: (context, controller) {
-            final query = controller.text.toLowerCase();
-            final items = ['Bear', 'Penguin', 'Rabbit'];
-
-            final filtered = items.where((item) => item.toLowerCase().contains(query)).toList();
-
-            return filtered.map((suggestion) {
-              return ListTile(
-                title: Text(suggestion),
-                onTap: () {
-                  controller.text = suggestion;
-                  searchController.closeView(suggestion); // close dropdown
+                  return filtered.map((suggestion) {
+                    return ListTile(
+                      title: Text(suggestion),
+                      onTap: () {
+                        controller.text = suggestion;
+                        searchController.closeView(suggestion);
+                      },
+                    );
+                  }).toList();
                 },
-              );
-            }).toList();
-          },
+              ),
+              const SizedBox(height: 40),
 
-        ),
+              /// Carousel Slider
+              CarouselSlider(
+                items: homePage.map((item) {
+                  final String imageUrl = item['cover'];
+                  final String linkUrl = item['url'];
 
-            const SizedBox(height: 20,),
-
-        CarouselSlider(
-
-          options: CarouselOptions(
-          height: MediaQuery.of(context).size.height,
-          scrollDirection: Axis.horizontal,
-          enlargeCenterPage: true,
-          autoPlay: false,
-          ), items: homePage.map( (item){
-
-          final String imageUrl = item['cover'];
-          final String linkUrl = item['url'];
-
-          return GestureDetector(
-            onTap: () async {
-              final Uri url = Uri.parse(linkUrl);
-              if (await canLaunchUrl(url)) {
-                await launchUrl(url, mode: LaunchMode.externalApplication);
-              } else {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Could not launch URL')),
-                );
-              }
-            },
-            child: Container(
-              margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12),
-                image: DecorationImage(
-                  image: NetworkImage(imageUrl),
-                  fit: BoxFit.cover,
+                  return GestureDetector(
+                    onTap: () async {
+                      final Uri url = Uri.parse(linkUrl);
+                      if (await canLaunchUrl(url)) {
+                        await launchUrl(url, mode: LaunchMode.externalApplication);
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('Could not launch URL')),
+                        );
+                      }
+                    },
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(12),
+                      child: Image.network(
+                        imageUrl,
+                        fit: BoxFit.cover,
+                        width: double.infinity,
+                      ),
+                    ),
+                  );
+                }).toList(),
+                options: CarouselOptions(
+                  autoPlay: false,
+                  enlargeCenterPage: false,
+                  viewportFraction: 1.0,
+                  aspectRatio: 1.2,
+                  onPageChanged: (index, reason) {
+                    setState(() {
+                      _current = index;
+                    });
+                  },
                 ),
-                boxShadow: const [
-                  BoxShadow(
-                    color: Colors.black26,
-                    blurRadius: 6,
-                    offset: Offset(2, 2),
-                  )
+              ),
+
+              const SizedBox(height: 12),
+
+              /// Dots Indicator
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: homePage.asMap().entries.map((entry) {
+                  return GestureDetector(
+                    onTap: () => setState(() => _current = entry.key),
+                    child: Container(
+                      width: 20.0,
+                      height: 7.0,
+                      margin: const EdgeInsets.symmetric(horizontal: 4.0),
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: _current == entry.key
+                            ? const Color(0xFFC48590)
+                            : Theme.of(context).scaffoldBackgroundColor,
+                        border: Border.all(
+                          color: const Color(0xFFC48590),
+                          width: 1,
+                        ),
+                      ),
+                    ),
+                  );
+                }).toList(),
+              ),
+
+              const SizedBox(height: 40),
+
+              /// Animal Buttons
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: const [
+                  AnimalButton(
+                    imagePath: 'assets/bear.png',
+                    label: 'Bear',
+                  ),
+                  AnimalButton(
+                    imagePath: 'assets/penguin.png',
+                    label: 'Penguin',
+                  ),
+                  AnimalButton(
+                    imagePath: 'assets/rabbit.png',
+                    label: 'Rabbit',
+                  ),
                 ],
               ),
-            ),
-          );
 
-        }
+              const SizedBox(height: 30),
 
-        ).toList()
+              Text('Explore', style: GoogleFonts.dynaPuff(fontSize: 24)),
+              const SizedBox(height: 5),
+
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Row(
+                    children: ExploreItems.map((item) {
+                      return Padding(
+                        padding: const EdgeInsets.only(right: 12),
+                        child: SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.6,
+                          child: Card(
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                            elevation: 4,
+                            child: ListTile(
+                              contentPadding: const EdgeInsets.all(8),
+                              leading: ClipRRect(
+                                borderRadius: BorderRadius.circular(8),
+                                child: Image.network(
+                                  item.imageUrl,
+                                  width: 50,
+                                  height: 50,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                              title: Text(item.title),
+                              subtitle: Text(item.subtitle),
+                              trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+                            ),
+                          ),
+                        ),
+                      );
+                    }).toList(),
+                  ),
                 ),
+              ),
 
 
-            const SizedBox(height: 20,),
-
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-
-                AnimalButton(
-                  imagePath: 'assets/bear.png',
-                  label: 'Bear',
-                ),
-                AnimalButton(
-                  imagePath: 'assets/penguin.png',
-                  label: 'Penguin',
-                ),
-                AnimalButton(
-                  imagePath: 'assets/rabbit.png',
-                  label: 'Rabbit',
-                ),
-
-              ],
-
-            ),
-
-            //gesture detector for url links articles
-
-            const SizedBox(height: 20,),
-
-            Text('Explore', style: GoogleFonts.dynaPuff(fontSize: 24),),
-
-            ListView(
 
 
-            ),
+              const SizedBox(height: 20),
+
+              Text('Discover', style: GoogleFonts.dynaPuff(fontSize: 24)),
+              const SizedBox(height: 5),
+              Column(
+                children: [
+
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.45,
+                        height: 250,
+                        child: YouTubeShortWidget(shortUrl: 'https://www.youtube.com/shorts/VUogf5sXZJo'),
+                      ),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.45,
+                        height: 250,
+                        child: YouTubeShortWidget(shortUrl: 'https://www.youtube.com/shorts/dzUQh5zkzBo'),
+                      ),
+                    ],
+                  ),
 
 
-            const SizedBox(height: 5,),
-
-            //carousel slider horizontally
-
-            const SizedBox(height: 20,),
-
-            Text('Discover', style: GoogleFonts.dynaPuff(fontSize: 24),),
-
-            const SizedBox(height: 5,),
-
-            ListView(
 
 
-            ),
-
-            //videos embedded with youtube.
-
-          ],
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -232,3 +290,53 @@ class AnimalButton extends StatelessWidget {
 }
 
 
+class Explore {
+
+  late String title;
+  late String subtitle;
+  late String imageUrl;
+
+ Explore({
+    required this.title,
+    required this.subtitle,
+   required this.imageUrl,
+
+});
+
+  factory Explore.fromJson(Map<String, dynamic> json){
+
+    return Explore(
+    title: 'title',
+    subtitle: 'subtitle',
+  imageUrl: 'imageUrl'
+
+
+
+    );
+
+
+
+
+
+
+  }
+
+}
+
+final List<Explore> ExploreItems =[
+
+  Explore(
+    title: 'Cute Bear',
+    subtitle: 'Loves honey and naps',
+    imageUrl: 'https://ik.imagekit.io/mnwxsrjlz/kawaii/kuma.png',
+  ),
+  Explore(
+    title: 'Happy Bunny',
+    subtitle: 'Hops around the forest',
+    imageUrl: 'https://ik.imagekit.io/mnwxsrjlz/kawaii/bunny.png',
+  ),
+
+
+
+
+];

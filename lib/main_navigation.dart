@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:kawaii_app/home/home.dart';
-import 'package:kawaii_app/play/play.dart';
+
 import 'package:kawaii_app/read/read.dart';
+import 'package:kawaii_app/play/music_playlist.dart';
 
 class MainNavigation extends StatefulWidget {
   final int initialIndex;
@@ -37,7 +38,7 @@ class _MainNavigationState extends State<MainNavigation> {
     final List<Widget> _pages = [
       const Center(child: AnimalHomePage()),
       Center(child: Read()),
-      const Center(child: Play()),
+      const Center(child: SimplePlaylist()),
     ];
 
     final currentPage = _pages[_selectedIndex];
