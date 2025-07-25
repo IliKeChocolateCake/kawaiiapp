@@ -48,6 +48,7 @@ class _AnimalHomePageState extends State<AnimalHomePage> {
       ),
       body: SafeArea(
         child: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
           padding: const EdgeInsets.all(12.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -55,6 +56,7 @@ class _AnimalHomePageState extends State<AnimalHomePage> {
               SearchAnchor.bar(
                 searchController: searchController,
                 barHintText: 'Search here.',
+
                 suggestionsBuilder: (context, controller) {
                   final query = controller.text.toLowerCase();
                   final items = ['Bear', 'Penguin', 'Rabbit'];
@@ -210,31 +212,36 @@ class _AnimalHomePageState extends State<AnimalHomePage> {
               const SizedBox(height: 20),
 
               Text('Discover', style: GoogleFonts.dynaPuff(fontSize: 24)),
-              const SizedBox(height: 5),
-              Column(
-                children: [
+              const SizedBox(height: 15),
 
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.45,
-                        height: 250,
-                        child: YouTubeShortWidget(shortUrl: 'https://www.youtube.com/shorts/VUogf5sXZJo'),
-                      ),
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.45,
-                        height: 250,
-                        child: YouTubeShortWidget(shortUrl: 'https://www.youtube.com/shorts/dzUQh5zkzBo'),
-                      ),
-                    ],
-                  ),
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Column(
+                  children: [
+
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.45,
+                          height: 250,
+                          child: YouTubeShortWidget(shortUrl: 'https://www.youtube.com/shorts/VUogf5sXZJo'),
+                        ),
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.45,
+                          height: 250,
+                          child: YouTubeShortWidget(shortUrl: 'https://www.youtube.com/shorts/dzUQh5zkzBo'),
+                        ),
+                      ],
+                    ),
 
 
 
 
-                ],
+                  ],
+                ),
               ),
+
             ],
           ),
         ),
@@ -336,7 +343,11 @@ final List<Explore> ExploreItems =[
     imageUrl: 'https://ik.imagekit.io/mnwxsrjlz/kawaii/bunny.png',
   ),
 
-
+  Explore(
+    title: 'Happy Bunny',
+    subtitle: 'Hops around the forest',
+    imageUrl: 'https://ik.imagekit.io/mnwxsrjlz/kawaii/bunny.png',
+  ),
 
 
 ];
