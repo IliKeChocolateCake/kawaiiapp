@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/rendering.dart';
+//import 'package:flutter/rendering.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class SimplePlaylist extends StatefulWidget {
@@ -135,6 +135,7 @@ class _SimplePlaylistState extends State<SimplePlaylist> {
                         Text(artist, style: GoogleFonts.dynaPuff(fontSize: 12)),
                         if (isPlaying)
                           Slider(
+                            label: _formatDuration(_duration),
                             min: 0,
                             max: _duration.inSeconds.toDouble(),
                             value: _position.inSeconds

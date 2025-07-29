@@ -23,9 +23,18 @@ class _YouTubeShortWidgetState extends State<YouTubeShortWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return AspectRatio(
-      aspectRatio: 9 / 16,
-      child: WebViewWidget(controller: _controller),
+
+    return Container(
+
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: AspectRatio(
+
+        aspectRatio: 16 / 9,
+        child: WebViewWidget(controller: _controller),
+      ),
     );
+
   }
 }

@@ -227,6 +227,7 @@ class _AnimalHomePageState extends State<AnimalHomePage> {
                           height: 250,
                           child: YouTubeShortWidget(shortUrl: 'https://www.youtube.com/shorts/VUogf5sXZJo'),
                         ),
+                        const SizedBox(width: 10,),
                         SizedBox(
                           width: MediaQuery.of(context).size.width * 0.45,
                           height: 250,
@@ -271,6 +272,7 @@ class AnimalButton extends StatelessWidget {
       child: Container(
         height: 80,
         width: 80,
+
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(20),

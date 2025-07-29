@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:kawaii_app/read/epub_reader_page.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:kawaii_app/read/reader_profile.dart';
 
 class Read extends StatelessWidget {
   Read({super.key});
@@ -38,17 +39,101 @@ class Read extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  CircleListItem(imageUrl: 'https://ik.imagekit.io/mnwxsrjlz/kawaii/bunny.png?updatedAt=1753254555727', label: 'Bunny'),
+                  InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => ReaderProfile(id: 1,  imageUrl: 'https://ik.imagekit.io/mnwxsrjlz/kawaii/bunny.png?updatedAt=1753254555727', label: 'Me',), // pass the ID
+                        ),
+                      );
+                    },
+                    child: CircleListItem(
+                      id: 1,
+                      imageUrl: 'https://ik.imagekit.io/mnwxsrjlz/kawaii/bunny.png?updatedAt=1753254555727',
+                      label: 'Me',
+                    ),
+                  ),
+
+
                   SizedBox(width: 12,),
-                  CircleListItem(imageUrl: 'https://ik.imagekit.io/mnwxsrjlz/kawaii/bunny.png?updatedAt=1753254555727', label: 'Bunny'),
+
+                  InkWell(
+
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => ReaderProfile(id: 2,imageUrl: 'https://ik.imagekit.io/mnwxsrjlz/kawaii/bunny.png?updatedAt=1753254555727', label: 'Bunny'), // pass the ID
+                        ),
+                      );
+                    },
+
+                    child:  CircleListItem(id: 2,imageUrl: 'https://ik.imagekit.io/mnwxsrjlz/kawaii/bunny.png?updatedAt=1753254555727', label: 'Bunny'),
+                  ),
+
                   SizedBox(width: 12,),
-                  CircleListItem(imageUrl: 'https://ik.imagekit.io/mnwxsrjlz/kawaii/bunny.png?updatedAt=1753254555727', label: 'Bunny'),
+
+                  InkWell(
+
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => ReaderProfile(id: 3, imageUrl: 'https://ik.imagekit.io/mnwxsrjlz/kawaii/bunny.png?updatedAt=1753254555727', label: 'Bunny'), // pass the ID
+                        ),
+                      );
+                    },
+
+                    child:  CircleListItem(id: 3, imageUrl: 'https://ik.imagekit.io/mnwxsrjlz/kawaii/bunny.png?updatedAt=1753254555727', label: 'Bunny'),
+                  ),
+
                   SizedBox(width: 12,),
-                  CircleListItem(imageUrl: 'https://ik.imagekit.io/mnwxsrjlz/kawaii/bunny.png?updatedAt=1753254555727', label: 'Bunny'),
+
+                  InkWell(
+
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => ReaderProfile(id: 4, imageUrl: 'https://ik.imagekit.io/mnwxsrjlz/kawaii/bunny.png?updatedAt=1753254555727', label: 'Bunny'), // pass the ID
+                        ),
+                      );
+                    },
+
+                    child: CircleListItem(id: 4, imageUrl: 'https://ik.imagekit.io/mnwxsrjlz/kawaii/bunny.png?updatedAt=1753254555727', label: 'Bunny'),
+                  ),
+
                   SizedBox(width: 12,),
-                  CircleListItem(imageUrl: 'https://ik.imagekit.io/mnwxsrjlz/kawaii/bunny.png?updatedAt=1753254555727', label: 'Bunny'),
+
+                  InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => ReaderProfile(id: 5, imageUrl: 'https://ik.imagekit.io/mnwxsrjlz/kawaii/bunny.png?updatedAt=1753254555727', label: 'Bunny'), // pass the ID
+                        ),
+                      );
+                    },
+
+                    child: CircleListItem(id: 5, imageUrl: 'https://ik.imagekit.io/mnwxsrjlz/kawaii/bunny.png?updatedAt=1753254555727', label: 'Bunny'),
+                  ),
+
                   SizedBox(width: 12,),
-                  CircleListItem(imageUrl: 'https://ik.imagekit.io/mnwxsrjlz/kawaii/bunny.png?updatedAt=1753254555727', label: 'Bunny'),
+
+                  InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => ReaderProfile(id: 6, imageUrl: 'https://ik.imagekit.io/mnwxsrjlz/kawaii/bunny.png?updatedAt=1753254555727', label: 'Bunny'), // pass the ID
+                        ),
+                      );
+                    },
+
+                    child:  CircleListItem(id: 6, imageUrl: 'https://ik.imagekit.io/mnwxsrjlz/kawaii/bunny.png?updatedAt=1753254555727', label: 'Bunny'),
+                  ),
+
                 ],
               ),
             ),
@@ -58,6 +143,7 @@ class Read extends StatelessWidget {
             const SizedBox(height: 10),
             SizedBox(
               height: 400,
+
               child: CarouselSlider(
                 options: CarouselOptions(
                   scrollDirection: Axis.vertical,
@@ -89,12 +175,9 @@ class Read extends StatelessWidget {
               ),
             ),
 
-            // You can repeat this section for epubBooks2 and epubBooks3
-            if (epubBooks2.isNotEmpty) ...[
-              const SizedBox(height: 30),
-              Text('Romance', style: GoogleFonts.dynaPuff(fontSize: 18)),
-              // Add CarouselSlider here for epubBooks2
-            ],
+            Text('Romance'),
+
+            Text('Comedy'),
           ],
         ),
       ),
@@ -103,11 +186,13 @@ class Read extends StatelessWidget {
 }
 
 class CircleListItem extends StatelessWidget {
+  final int id;
   final String imageUrl;
   final String label;
 
   const CircleListItem({
     super.key,
+    required this.id,
     required this.imageUrl,
     required this.label,
   });
@@ -116,6 +201,7 @@ class CircleListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
+
         Container(
           width: 54,
           height: 54,
@@ -133,7 +219,6 @@ class CircleListItem extends StatelessWidget {
     );
   }
 }
-
 
 
 
